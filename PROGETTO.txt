@@ -120,14 +120,16 @@ PRIVACY
 
 UX DETTAGLI AGGIUNTIVI
 ----------------------
+- Header sticky: la barra in alto (brand + pillole + API Key) è fissa mentre
+  la pagina scorre sotto; background con blur, bordo inferiore e ombra leggera
 - Hint arancione animato (freccia su + testo) visibile quando textarea è vuota;
   scompare appena si carica un esempio o si inizia a digitare
 - I 4 bottoni esempi pulsano leggermente (animazione CSS) finché textarea è vuota
 - Pulsante "✕ Cancella testo" rosso con bordo appare sotto la textarea quando
-  c'è testo; scompare quando la textarea è vuota; pulisce textarea, risultati
-  e stato corrente
-- Su mobile: titolo, testo descrizione, pillole benefici e bottoni esempi
-  sono tutti centrati per un layout più bilanciato
+  c'è testo; scompare quando vuota; pulisce textarea, risultati e stato corrente
+- Su mobile: titolo, descrizione, pillole benefici e bottoni esempi centrati
+- Titolo principale più grande (clamp 28–40px) e descrizione più visibile
+  (font-size 16px, colore testo principale con opacità 80%)
 
 STATO ATTUALE
 -------------
@@ -135,12 +137,13 @@ STATO ATTUALE
 - [x] Demo mode con 4 esempi realistici
 - [x] Live mode con chiamata Claude API diretta da browser
 - [x] Gestione chiave API (salva/rimuovi)
+- [x] Header sticky (barra fissa, contenuto scorre sotto)
 - [x] Hint visivo animato per nuovi utenti
 - [x] Bottone cancella testo (rosso, visibile solo con testo presente)
 - [x] Copia analisi in testo plain
 - [x] Dark mode completo
 - [x] Mobile responsive con layout centrato
-- [x] Deploy su GitHub Pages
+- [x] Deploy su GitHub Pages (sezione A14 portfolio)
 - [ ] Aggiunta al portfolio principale
 
 ================================================================================
