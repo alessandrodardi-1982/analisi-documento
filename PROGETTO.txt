@@ -1,0 +1,135 @@
+================================================================================
+PROGETTO: Analisi Documento — AI Tool per portfolio di Alessandro Dardi
+================================================================================
+
+SCOPO
+-----
+Tool web che analizza qualsiasi documento aziendale (preventivi, contratti,
+email commerciali, bandi) e restituisce in pochi secondi una sintesi strutturata
+in 5 sezioni: Sintesi, Cosa include, Punti di attenzione, Condizioni chiave,
+Domande da fare.
+
+Fa parte del portfolio di Alessandro Dardi (Operations & Service Manager, Bologna).
+Portfolio: https://alessandrodardi-1982.github.io/portfolio/
+
+PRINCIPI PROGETTUALI
+--------------------
+- Privacy-first: nessun dato salvato su server, nessun database
+- Zero backend: funziona su GitHub Pages puro (static hosting)
+- Modalità Demo (default) + Modalità Live (con API key Anthropic dell'utente)
+- "AI suggerisce, umano decide" — output sempre revisionabile
+- Applicabile a qualsiasi settore aziendale (non verticale su un solo mercato)
+
+ARCHITETTURA TECNICA
+--------------------
+Tipo:        Single-page HTML (un file unico, self-contained)
+Hosting:     GitHub Pages (statico, zero costi)
+Backend:     Nessuno — la chiamata API parte direttamente dal browser
+API AI:      Anthropic Claude (modello: claude-haiku-4-5)
+Autenticazione API: chiave inserita dall'utente, salvata in localStorage
+             (non transita per nessun server intermedio)
+Font:        Google Fonts — Inter (400, 500, 600, 700)
+Librerie JS: nessuna (vanilla JS puro)
+
+STRUTTURA FILE
+--------------
+analisi-documento/
+├── index.html          ← intera applicazione (HTML + CSS + JS inline)
+├── netlify.toml        ← config Netlify (non usato attivamente, tenuto per backup)
+├── .env.example        ← template variabili d'ambiente (solo documentazione)
+├── .gitignore          ← esclude .env e node_modules
+├── PROGETTO.txt        ← questo file
+├── assets/
+│   ├── css/            ← vuota (CSS è inline in index.html)
+│   └── js/             ← vuota (JS è inline in index.html)
+└── netlify/
+    └── functions/      ← vuota (non si usa Netlify Functions)
+
+FUNZIONAMENTO
+-------------
+MODALITÀ DEMO (default, senza API key):
+  - L'utente carica uno dei 4 esempi precaricati cliccando i bottoni
+  - Clicca "Analizza documento"
+  - Viene mostrata un'animazione di caricamento simulata (~2 secondi)
+  - Appare l'analisi pre-scritta corrispondente all'esempio
+  - Badge "Demo · dati simulati" visibile in testa ai risultati
+
+MODALITÀ LIVE (con API key):
+  - L'utente clicca "⚙ API Key" in alto a destra
+  - Incolla la sua chiave Anthropic (sk-ant-...)
+  - La chiave viene salvata in localStorage con key "analisi_doc_apikey"
+  - Il badge in alto cambia da "Demo" (grigio) a "Live" (verde)
+  - Al click su "Analizza documento" viene chiamato:
+    POST https://api.anthropic.com/v1/messages
+    Headers: x-api-key, anthropic-version: 2023-06-01,
+             anthropic-dangerous-direct-browser-ipc: true
+    Model: claude-haiku-4-5 — max_tokens: 1500
+  - Claude restituisce JSON strutturato (estratto via regex dal testo)
+  - Badge "⚡ Analisi live · Claude AI" visibile in testa ai risultati
+
+STRUTTURA OUTPUT (JSON atteso da Claude)
+-----------------------------------------
+{
+  "title": "titolo descrittivo max 60 caratteri",
+  "meta": "tipo · valore economico · data",
+  "risk": "ok | warn | risk",
+  "riskLabel": "etichetta breve del livello rischio",
+  "sections": {
+    "sintesi": "HTML con <strong> per valori chiave",
+    "include": ["punto 1", "punto 2", ...],
+    "attenzione": [{"text": "...", "level": "warn | risk"}, ...],
+    "condizioni": [{"k": "nome", "v": "valore", "flag": true|false}, ...],
+    "domande": ["domanda 1", "domanda 2", ...]
+  }
+}
+
+ESEMPI PRECARICATI
+------------------
+1. Preventivo fornitore    → scaffalatura industriale, Bologna
+2. Contratto di servizio   → manutenzione climatizzazione
+3. Email commerciale       → proposta distribuzione esclusiva
+4. Contratto locazione     → ufficio uso commerciale, Bologna
+(tutti con dati fittizi, dichiarati come tali)
+
+UX E COMPORTAMENTO
+------------------
+- All'apertura: hint arancione animato ("Carica uno degli esempi") + bottoni pulsanti
+- Hint scompare appena viene caricato un esempio o l'utente inizia a scrivere
+- Pulsante "✕ Cancella testo" (rosso, con bordo) appare sotto la textarea
+  quando c'è testo; scompare quando è vuota
+- Loading bar animata durante l'analisi con messaggi di stato progressivi
+- Sezioni risultati collassabili (accordion), prima sezione aperta di default
+- Pulsante "Copia analisi" → copia testo pulito (senza HTML) negli appunti
+- Pulsante "↩ Nuova analisi" → resetta tutto e torna all'inizio
+- Toast notification per conferme e errori
+
+TEMA / DESIGN
+-------------
+- Light mode default, dark mode completo via prefers-color-scheme + data-theme
+- Palette: blu notte (#1d3557) primario, arancione (#d9622b) accent
+- Token CSS su :root, tutti i colori derivati da variabili
+- Layout: max-width 780px, padding laterale 16px, mobile-first
+
+PRIVACY
+-------
+- Nessun cookie, nessun tracking
+- API key salvata solo in localStorage del browser dell'utente
+- Testo del documento inviato solo ad Anthropic API (con DPA)
+- Nessun server intermedio in modalità live
+- Nota privacy visibile in fondo alla pagina con link a informativa Anthropic
+
+STATO ATTUALE
+-------------
+- [x] UI completa e funzionante
+- [x] Demo mode con 4 esempi realistici
+- [x] Live mode con chiamata Claude API diretta da browser
+- [x] Gestione chiave API (salva/rimuovi)
+- [x] Hint visivo per nuovi utenti
+- [x] Bottone cancella testo
+- [x] Copia analisi in testo plain
+- [x] Dark mode
+- [x] Mobile responsive
+- [ ] Deploy su GitHub Pages (da fare)
+- [ ] Aggiunta al portfolio principale
+
+================================================================================
