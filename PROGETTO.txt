@@ -118,18 +118,29 @@ PRIVACY
 - Nessun server intermedio in modalità live
 - Nota privacy visibile in fondo alla pagina con link a informativa Anthropic
 
+UX DETTAGLI AGGIUNTIVI
+----------------------
+- Hint arancione animato (freccia su + testo) visibile quando textarea è vuota;
+  scompare appena si carica un esempio o si inizia a digitare
+- I 4 bottoni esempi pulsano leggermente (animazione CSS) finché textarea è vuota
+- Pulsante "✕ Cancella testo" rosso con bordo appare sotto la textarea quando
+  c'è testo; scompare quando la textarea è vuota; pulisce textarea, risultati
+  e stato corrente
+- Su mobile: titolo, testo descrizione, pillole benefici e bottoni esempi
+  sono tutti centrati per un layout più bilanciato
+
 STATO ATTUALE
 -------------
 - [x] UI completa e funzionante
 - [x] Demo mode con 4 esempi realistici
 - [x] Live mode con chiamata Claude API diretta da browser
 - [x] Gestione chiave API (salva/rimuovi)
-- [x] Hint visivo per nuovi utenti
-- [x] Bottone cancella testo
+- [x] Hint visivo animato per nuovi utenti
+- [x] Bottone cancella testo (rosso, visibile solo con testo presente)
 - [x] Copia analisi in testo plain
-- [x] Dark mode
-- [x] Mobile responsive
-- [ ] Deploy su GitHub Pages (da fare)
+- [x] Dark mode completo
+- [x] Mobile responsive con layout centrato
+- [x] Deploy su GitHub Pages
 - [ ] Aggiunta al portfolio principale
 
 ================================================================================
