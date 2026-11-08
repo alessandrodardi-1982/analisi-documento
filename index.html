@@ -119,65 +119,7 @@ button { cursor: pointer; font-family: inherit; }
   transition: all .2s;
 }
 .mode-pill.demo { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
-.mode-pill.live { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok); }
 .mode-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-
-.btn-settings {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 12px; font-weight: 500; color: var(--muted);
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 20px; padding: 3px 11px;
-  transition: all .15s;
-}
-.btn-settings:hover { border-color: var(--primary); color: var(--text); }
-
-/* ─── API KEY PANEL ──────────────────────────────── */
-.api-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  box-shadow: var(--sh-md);
-  padding: 20px 24px;
-  margin-bottom: 24px;
-  display: none;
-}
-.api-panel.open { display: block; }
-.api-panel-title {
-  font-size: 14px; font-weight: 600; color: var(--text);
-  margin-bottom: 4px;
-}
-.api-panel-sub {
-  font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.55;
-}
-.api-panel-sub a { font-weight: 500; }
-.api-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.api-input {
-  flex: 1; min-width: 200px;
-  font-family: 'Courier New', monospace; font-size: 13px;
-  color: var(--text); background: var(--surface-2);
-  border: 1px solid var(--border); border-radius: var(--r-sm);
-  padding: 9px 12px; outline: none;
-  transition: border-color .15s;
-}
-.api-input:focus { border-color: var(--primary); }
-.btn-save-key {
-  padding: 9px 16px; font-size: 13px; font-weight: 600;
-  background: var(--primary); color: #fff;
-  border: none; border-radius: var(--r-sm);
-  transition: background .15s;
-  white-space: nowrap;
-}
-.btn-save-key:hover { background: var(--primary-h); }
-.btn-clear-key {
-  padding: 9px 12px; font-size: 12px; font-weight: 500;
-  background: transparent; color: var(--muted);
-  border: 1px solid var(--border); border-radius: var(--r-sm);
-  transition: all .15s;
-}
-.btn-clear-key:hover { border-color: var(--risk); color: var(--risk); }
-.api-note {
-  font-size: 11px; color: var(--faint); margin-top: 10px; line-height: 1.55;
-}
 
 /* ─── HEADER ─────────────────────────────────────── */
 .page-header { margin-bottom: 32px; text-align: center; }
@@ -402,7 +344,6 @@ textarea { resize: vertical; min-height: 180px; line-height: 1.55; }
   background: var(--surface-2); border: 1px solid var(--border);
   margin-bottom: 12px;
 }
-.source-badge.live { color: var(--ok); background: var(--ok-bg); border-color: var(--ok); }
 
 /* ─── PRIVACY NOTE ───────────────────────────────── */
 .privacy-note {
@@ -475,9 +416,6 @@ footer a { color: var(--faint); }
           </svg>
           Nessun salvataggio sul sito
         </div>
-        <button class="btn-settings" onclick="toggleApiPanel()">
-          ⚙ API Key
-        </button>
       </div>
     </div>
   </div>
@@ -485,25 +423,10 @@ footer a { color: var(--faint); }
 
 <div class="wrap">
 
-  <!-- API KEY PANEL -->
-  <div class="api-panel" id="apiPanel">
-    <div class="api-panel-title">Connetti la tua API key Anthropic</div>
-    <div class="api-panel-sub">
-      La chiave viene salvata solo nel tuo browser (localStorage) e viene inviata solo ad Anthropic per eseguire le analisi.<br>
-      Ottienila su <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> — costo indicativo: circa 1 centesimo di dollaro per analisi con claude-haiku-4-5.
-    </div>
-    <div class="api-row">
-      <input class="api-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
-      <button class="btn-save-key" onclick="saveKey()">Salva e attiva</button>
-      <button class="btn-clear-key" id="btnClearKey" onclick="clearKey()" style="display:none">Rimuovi</button>
-    </div>
-    <div class="api-note">La chiave resta nel tuo browser e viene inviata solo ad Anthropic. Ogni analisi reale costa circa $0,01 con claude-haiku-4-5.</div>
-  </div>
-
   <!-- HEADER -->
   <div class="page-header">
     <h1>Analisi rapida di qualsiasi documento</h1>
-    <p>Hai un preventivo da valutare, un contratto da firmare o un'email commerciale a cui rispondere? Incolla il testo e in pochi secondi ottieni i punti critici, le condizioni chiave e le domande giuste da fare, senza rileggere tutto tre volte.</p>
+    <p>Hai un preventivo da valutare, un contratto da firmare o un'email commerciale a cui rispondere? Scegli un esempio pronto e in pochi secondi vedi i punti critici, le condizioni chiave e le domande giuste da fare, senza rileggere tutto tre volte.</p>
     <div class="header-pills">
       <span class="header-pill">⏱ Da 30 minuti a 30 secondi</span>
       <span class="header-pill">📋 5 sezioni strutturate</span>
@@ -554,7 +477,7 @@ footer a { color: var(--faint); }
     </div>
     <div class="field-group">
       <label class="field-label" for="doctext">Testo del documento</label>
-      <textarea id="doctext" placeholder="Incolla qui il testo del documento da analizzare..." oninput="updateCount()"></textarea>
+      <textarea id="doctext" placeholder="Scegli un esempio pronto qui sopra per caricare un documento di prova..." oninput="updateCount()"></textarea>
       <div class="char-row">
         <div class="char-count" id="charcount">0 caratteri</div>
         <button class="btn-clear-text" id="btnClearText" onclick="clearText()">
@@ -610,7 +533,7 @@ footer a { color: var(--faint); }
       <path d="M6 8.5l1.5 1.5L10.5 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <p>
-      <strong>Come funziona la privacy.</strong> In modalità demo non parte nessuna richiesta: gli esempi sono simulati. In modalità live il testo viene inviato direttamente dal tuo browser all'API di Anthropic con la tua chiave personale: non passa da nessun server di questo sito e questo sito non lo salva. Da quel momento lo tratta Anthropic secondo la propria informativa. La chiave è conservata solo nel localStorage del tuo browser. <a href="https://www.anthropic.com/legal/privacy" target="_blank">Informativa Anthropic →</a>
+      <strong>Come funziona la privacy.</strong> Questa è una demo: l'analisi è simulata su esempi con dati fittizi. Il testo non viene inviato a nessun servizio e questo sito non lo salva.
     </p>
   </div>
 
@@ -624,47 +547,6 @@ footer a { color: var(--faint); }
 <div class="toast" id="toast"></div>
 
 <script>
-/* ─── PROMPT CLAUDE ──────────────────────────────── */
-const SYSTEM_PROMPT = `Sei un assistente specializzato nell'analisi di documenti aziendali italiani.
-Analizza il documento e rispondi ESCLUSIVAMENTE con un oggetto JSON valido, senza testo prima o dopo.
-Struttura richiesta:
-{
-  "title": "titolo descrittivo max 60 caratteri",
-  "meta": "tipo documento · valore economico se presente · data se presente",
-  "risk": "ok oppure warn oppure risk",
-  "riskLabel": "etichetta breve es: ✓ Nessun problema oppure ⚠ Attenzione a N punti oppure 🔴 Clausole critiche",
-  "sections": {
-    "sintesi": "2-3 frasi in HTML con <strong> per i valori chiave",
-    "include": ["punto 1", "punto 2"],
-    "attenzione": [{"text": "descrizione problema", "level": "warn o risk"}],
-    "condizioni": [{"k": "nome condizione", "v": "valore", "flag": true se critico altrimenti false}],
-    "domande": ["domanda concreta da fare alla controparte 1", "domanda 2"]
-  }
-}
-Usa italiano. Sii diretto e concreto. Se non ci sono problemi, attenzione può essere vuota [].`;
-
-function buildUserPrompt(text, doctype, purpose) {
-  const typeMap = {
-    preventivo: 'Preventivo / Offerta commerciale',
-    contratto:  'Contratto / Accordo',
-    email:      'Email / Comunicazione',
-    bando:      'Bando / Capitolato',
-    altro:      'Documento generico'
-  };
-  const purposeMap = {
-    valuta:   'valutare se accettare',
-    firma:    'prepararsi a firmare',
-    negozia:  'negoziare le condizioni',
-    risposta: 'preparare una risposta',
-    archivia: 'estrarre informazioni chiave'
-  };
-  return `Tipo documento: ${typeMap[doctype] || doctype}
-Obiettivo: ${purposeMap[purpose] || purpose}
-
-DOCUMENTO:
-${text}`;
-}
-
 /* ─── EXAMPLE DOCUMENTS ──────────────────────────── */
 const EXAMPLES = {
   preventivo: {
@@ -847,61 +729,14 @@ const ANALYSES = {
 /* ─── STATE ──────────────────────────────────────── */
 let currentExample = null;
 let lastAnalysis   = null;
-let apiKey         = '';
 
 /* ─── INIT ───────────────────────────────────────── */
 (function init() {
-  try { apiKey = localStorage.getItem('analisi_doc_apikey') || ''; } catch(e) {}
-  updateModeUI();
+  // pulisce eventuali chiavi salvate quando esisteva la modalità Live
+  try { localStorage.removeItem('analisi_doc_apikey'); } catch(e) {}
   updateCount();
   setHint(true);
 })();
-
-/* ─── API KEY ─────────────────────────────────────── */
-function toggleApiPanel() {
-  const panel = document.getElementById('apiPanel');
-  panel.classList.toggle('open');
-  if (panel.classList.contains('open')) {
-    const input = document.getElementById('apiKeyInput');
-    if (apiKey) input.value = apiKey;
-    document.getElementById('btnClearKey').style.display = apiKey ? 'block' : 'none';
-  }
-}
-
-function saveKey() {
-  const val = document.getElementById('apiKeyInput').value.trim();
-  if (!val.startsWith('sk-ant-')) {
-    showToast('Chiave non valida (deve iniziare con sk-ant-)');
-    return;
-  }
-  apiKey = val;
-  try { localStorage.setItem('analisi_doc_apikey', apiKey); } catch(e) {}
-  document.getElementById('btnClearKey').style.display = 'block';
-  updateModeUI();
-  document.getElementById('apiPanel').classList.remove('open');
-  showToast('✓ API Key salvata — modalità Live attiva');
-}
-
-function clearKey() {
-  apiKey = '';
-  try { localStorage.removeItem('analisi_doc_apikey'); } catch(e) {}
-  document.getElementById('apiKeyInput').value = '';
-  document.getElementById('btnClearKey').style.display = 'none';
-  updateModeUI();
-  showToast('Chiave rimossa — torno in modalità Demo');
-}
-
-function updateModeUI() {
-  const pill  = document.getElementById('modePill');
-  const label = document.getElementById('modeLabel');
-  if (apiKey) {
-    pill.className = 'mode-pill live';
-    label.textContent = 'Live';
-  } else {
-    pill.className = 'mode-pill demo';
-    label.textContent = 'Demo';
-  }
-}
 
 /* ─── EXAMPLES ───────────────────────────────────── */
 function loadExample(key) {
@@ -948,10 +783,14 @@ async function analyzeDoc() {
 
   showLoading(true);
 
-  if (apiKey) {
-    await analyzeWithClaude(text);
-  } else {
+  const ex = EXAMPLES[currentExample];
+  if (ex && ex.text.trim() === text) {
     await analyzeDemo();
+  } else {
+    showLoading(false);
+    btn.disabled = false;
+    showError('Questa demo analizza solo gli esempi pronti: scegline uno qui sopra. Il testo che incolli non viene analizzato né inviato.');
+    return;
   }
 
   showLoading(false);
@@ -968,72 +807,13 @@ async function analyzeDemo() {
     [400, 95, 'Finalizzazione…']
   ];
   await runLoadingSteps(steps);
-  renderAnalysis(ANALYSES[key] || ANALYSES['preventivo'], false);
-}
-
-/* ─── LIVE MODE ──────────────────────────────────── */
-async function analyzeWithClaude(text) {
-  const doctype = document.getElementById('doctype').value;
-  const purpose = document.getElementById('purpose').value;
-
-  setLoadLabel('Invio a Claude…');
-  setLoadFill(20);
-
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type':       'application/json',
-        'x-api-key':          apiKey,
-        'anthropic-version':  '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model:      'claude-haiku-4-5',
-        max_tokens: 1500,
-        system:     SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: buildUserPrompt(text, doctype, purpose) }]
-      })
-    });
-
-    setLoadFill(70);
-    setLoadLabel('Elaborazione risposta…');
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err?.error?.message || `Errore API ${resp.status}`);
-    }
-
-    const data = await resp.json();
-    setLoadFill(90);
-
-    const raw = data?.content?.[0]?.text || '';
-    // estrae il JSON anche se Claude aggiunge testo attorno
-    const match = raw.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error('Risposta non in formato JSON atteso.');
-
-    const analysis = JSON.parse(match[0]);
-    setLoadFill(100);
-    await delay(200);
-    renderAnalysis(analysis, true);
-
-  } catch (e) {
-    showError(e.message || 'Errore sconosciuto. Verifica la chiave API.');
-  }
+  renderAnalysis(ANALYSES[key] || ANALYSES['preventivo']);
 }
 
 /* ─── RENDER ──────────────────────────────────────── */
-function renderAnalysis(a, isLive) {
+function renderAnalysis(a) {
   lastAnalysis = a;
 
-  const badge = document.getElementById('sourceBadge');
-  if (isLive) {
-    badge.className = 'source-badge live';
-    badge.textContent = '⚡ Analisi live · Claude AI';
-  } else {
-    badge.className = 'source-badge';
-    badge.textContent = 'Demo · dati simulati';
-  }
 
   document.getElementById('resultTitle').textContent = a.title;
   document.getElementById('resultMeta').textContent  = a.meta;
