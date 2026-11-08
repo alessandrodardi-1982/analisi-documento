@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Analisi Documento</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 /* ─── TOKENS ─────────────────────────────────────── */
 :root {
@@ -474,7 +473,7 @@ footer a { color: var(--faint); }
             <path d="M5.5 1L1 3v3c0 2.5 1.9 4.8 4.5 5.5C8.1 10.8 10 8.5 10 6V3L5.5 1z" fill="currentColor" opacity=".25"/>
             <path d="M5.5 1L1 3v3c0 2.5 1.9 4.8 4.5 5.5C8.1 10.8 10 8.5 10 6V3L5.5 1z" stroke="currentColor" stroke-width="1.2" fill="none"/>
           </svg>
-          Dati non salvati
+          Nessun salvataggio sul sito
         </div>
         <button class="btn-settings" onclick="toggleApiPanel()">
           ⚙ API Key
@@ -490,15 +489,15 @@ footer a { color: var(--faint); }
   <div class="api-panel" id="apiPanel">
     <div class="api-panel-title">Connetti la tua API key Anthropic</div>
     <div class="api-panel-sub">
-      La chiave viene salvata solo nel tuo browser (localStorage) e non raggiunge nessun server esterno.<br>
-      Ottienila su <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> — costo indicativo: ~€0,01 per analisi con claude-haiku.
+      La chiave viene salvata solo nel tuo browser (localStorage) e viene inviata solo ad Anthropic per eseguire le analisi.<br>
+      Ottienila su <a href="https://console.anthropic.com/" target="_blank">console.anthropic.com</a> — costo indicativo: circa 1 centesimo di dollaro per analisi con claude-haiku-4-5.
     </div>
     <div class="api-row">
       <input class="api-input" type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off">
       <button class="btn-save-key" onclick="saveKey()">Salva e attiva</button>
       <button class="btn-clear-key" id="btnClearKey" onclick="clearKey()" style="display:none">Rimuovi</button>
     </div>
-    <div class="api-note">La chiave non lascia il tuo browser. Ogni analisi reale costa ~$0.01 con claude-haiku-3-5.</div>
+    <div class="api-note">La chiave resta nel tuo browser e viene inviata solo ad Anthropic. Ogni analisi reale costa circa $0,01 con claude-haiku-4-5.</div>
   </div>
 
   <!-- HEADER -->
@@ -611,13 +610,13 @@ footer a { color: var(--faint); }
       <path d="M6 8.5l1.5 1.5L10.5 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <p>
-      <strong>Come funziona la privacy.</strong> In modalità live, il testo viene inviato direttamente dal tuo browser all'API di Anthropic usando la tua chiave personale. Non passa per nessun server intermedio, non viene salvato, non viene usato per addestrare modelli. La chiave è conservata solo nel localStorage del tuo browser. <a href="https://www.anthropic.com/legal/privacy" target="_blank">Informativa Anthropic →</a>
+      <strong>Come funziona la privacy.</strong> In modalità demo non parte nessuna richiesta: gli esempi sono simulati. In modalità live il testo viene inviato direttamente dal tuo browser all'API di Anthropic con la tua chiave personale: non passa da nessun server di questo sito e questo sito non lo salva. Da quel momento lo tratta Anthropic secondo la propria informativa. La chiave è conservata solo nel localStorage del tuo browser. <a href="https://www.anthropic.com/legal/privacy" target="_blank">Informativa Anthropic →</a>
     </p>
   </div>
 
   <footer>
     Strumento dimostrativo · Esempi con dati fittizi ·
-    <a href="https://alessandrodardi-1982.github.io/portfolio/" target="_blank">Portfolio →</a>
+    <a href="https://alessandrodardi.it/" target="_blank" rel="noopener">Portfolio →</a>
   </footer>
 
 </div>
@@ -987,7 +986,7 @@ async function analyzeWithClaude(text) {
         'Content-Type':       'application/json',
         'x-api-key':          apiKey,
         'anthropic-version':  '2023-06-01',
-        'anthropic-dangerous-direct-browser-ipc': 'true'
+        'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model:      'claude-haiku-4-5',
